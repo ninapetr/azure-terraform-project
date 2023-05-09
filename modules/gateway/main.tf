@@ -3,6 +3,8 @@ resource "azurerm_public_ip" "pub_ip" {
   resource_group_name = var.rg
   location            = var.location
   allocation_method   = "Static"
+  sku = "Standard"
+  zones = ["1", "2", "3"]
 }
 
 # Locals used for naming resources
@@ -16,6 +18,9 @@ locals {
   redirect_configuration_name    = "${var.vnet_name}-rdrcfg"
 }
 
+# Multizone application gateway requirements
+# -> static public ip with standard sku in 3 zones
+# -> either capacity argument or autoscaling
 resource "azurerm_application_gateway" "ap_gw" {
   name                = "appgateway"
   resource_group_name = var.rg
@@ -25,7 +30,11 @@ resource "azurerm_application_gateway" "ap_gw" {
   sku {
     name     = "Standard_v2"
     tier     = "Standard_v2"
-    capacity = 2
+  }
+
+  autoscale_configuration {
+    min_capacity   = 1
+    max_capacity = 3
   }
 
   gateway_ip_configuration {
@@ -41,13 +50,6 @@ resource "azurerm_application_gateway" "ap_gw" {
   frontend_ip_configuration {
     name                 = local.frontend_ip_configuration_name
     public_ip_address_id = azurerm_public_ip.pub_ip.id
-  }
-
-  frontend_ip_configuration {
-    name                 = "${local.frontend_ip_configuration_name}-private"
-    subnet_id = var.gwsubnet_id
-    private_ip_address_allocation = "Static"
-    private_ip_address = "192.168.1.100"
   }
 
   backend_address_pool {
