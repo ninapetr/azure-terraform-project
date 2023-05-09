@@ -4,6 +4,8 @@ A terraform solution for deploying the following infrastructure in Azure.
 ![Diagram](docs/images/diagram.png)
 
 Todo:
+* <del>networking module</del>
+* <del>application gateway</del>
 * security group for webtier
 * webtier autoscaling group
 * bastion vm
