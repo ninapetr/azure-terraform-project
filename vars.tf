@@ -10,3 +10,4 @@ variable "vnetcidr" {}
 variable "gwsubnetcidr" {}
 variable "appsubnetcidr" {}
 variable "dbsubnetcidr" {}
+variable "vnet_name" {}

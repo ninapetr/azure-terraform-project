@@ -24,8 +24,19 @@ module "networking" {
   source         = "./modules/networking"
   rg             = module.resourcegroup.rg
   location       = module.resourcegroup.loc_id
+
   vnetcidr       = var.vnetcidr
+  vnet_name      = var.vnet_name
   gwsubnetcidr   = var.gwsubnetcidr
   appsubnetcidr  = var.appsubnetcidr
   dbsubnetcidr   = var.dbsubnetcidr
+}
+
+module "gateway" {
+  source         = "./modules/gateway"
+  rg             = module.resourcegroup.rg
+  location       = module.resourcegroup.loc_id
+
+  gwsubnet_id    = module.networking.gwsubnet_id
+  vnet_name      = var.vnet_name
 }
