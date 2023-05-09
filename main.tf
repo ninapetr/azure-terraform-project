@@ -10,21 +10,22 @@ terraform {
 
 # Configure the Microsoft Azure Provider
 provider "azurerm" {
+  skip_provider_registration = "true"
   features {}
 }
 
 module "resourcegroup" {
   source         = "./modules/resourcegroup"
-  name           = var.rg_name
-  location       = var.rg_location
+  rg_name        = var.rg_name
+  rg_location    = var.rg_location
 }
 
 module "networking" {
   source         = "./modules/networking"
+  rg             = module.resourcegroup.rg
   location       = module.resourcegroup.loc_id
-  resource_group = module.resourcegroup.rg_name
   vnetcidr       = var.vnetcidr
-  websubnetcidr  = var.gwsubnetcidr
+  gwsubnetcidr   = var.gwsubnetcidr
   appsubnetcidr  = var.appsubnetcidr
   dbsubnetcidr   = var.dbsubnetcidr
 }
