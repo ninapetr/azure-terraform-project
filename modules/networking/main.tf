@@ -12,11 +12,11 @@ resource "azurerm_subnet" "gw-subnet" {
   address_prefixes     = [var.gwsubnetcidr]
 }
 
-resource "azurerm_subnet" "app-subnet" {
-  name                 = "app-subnet"
+resource "azurerm_subnet" "web-subnet" {
+  name                 = "web-subnet"
   virtual_network_name = azurerm_virtual_network.main.name
   resource_group_name  = var.rg
-  address_prefixes     = [var.appsubnetcidr]
+  address_prefixes     = [var.websubnetcidr]
 }
 
 resource "azurerm_subnet" "db-subnet" {
