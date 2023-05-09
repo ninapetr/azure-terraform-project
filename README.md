@@ -9,6 +9,8 @@ Todo:
 * bastion vm
 * load balancer 
 * dbtier
+* dns
+* simple monitoring
 * ci/cd for webtier (optional)
 * simple ui 
 * variables from ui
