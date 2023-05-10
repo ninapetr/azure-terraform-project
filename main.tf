@@ -28,15 +28,31 @@ module "networking" {
   vnetcidr       = var.vnetcidr
   vnet_name      = var.vnet_name
   gwsubnetcidr   = var.gwsubnetcidr
-  appsubnetcidr  = var.appsubnetcidr
+  websubnetcidr  = var.websubnetcidr
   dbsubnetcidr   = var.dbsubnetcidr
 }
 
-module "gateway" {
+module "loadbalancer" {
   source         = "./modules/gateway"
   rg             = module.resourcegroup.rg
   location       = module.resourcegroup.loc_id
 
   gwsubnet_id    = module.networking.gwsubnet_id
   vnet_name      = var.vnet_name
+}
+
+#module "loadbalancer" {
+#  source         = "./modules/securitygroup"
+#  rg             = module.resourcegroup.rg
+#  location       = module.resourcegroup.loc_id
+
+
+#}
+
+module "vmss" {
+  source         = "./modules/webtier"
+  rg             = module.resourcegroup.rg
+  location       = module.resourcegroup.loc_id
+
+  websubnet_id   = module.networking.websubnet_id
 }

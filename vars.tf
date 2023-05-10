@@ -8,6 +8,6 @@ variable "rg_location" {
 # Cidr blocks for the network and network subnets
 variable "vnetcidr" {}
 variable "gwsubnetcidr" {}
-variable "appsubnetcidr" {}
+variable "websubnetcidr" {}
 variable "dbsubnetcidr" {}
 variable "vnet_name" {}
