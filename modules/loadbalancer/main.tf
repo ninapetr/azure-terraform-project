@@ -32,7 +32,6 @@ resource "azurerm_lb_backend_address_pool" "scalesetpool" {
 }
 
 resource "azurerm_lb_probe" "probe" {
-  resource_group_name = var.rg
   loadbalancer_id     = azurerm_lb.app_balancer.id
   name                = "probe"
   port                = 80
@@ -43,7 +42,6 @@ resource "azurerm_lb_probe" "probe" {
 }
 
 resource "azurerm_lb_rule" "rule" {
-  resource_group_name            = var.rg
   loadbalancer_id                = azurerm_lb.app_balancer.id
   name                           = "RuleA"
   protocol                       = "Tcp"

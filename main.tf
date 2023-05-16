@@ -33,7 +33,7 @@ module "networking" {
 }
 
 module "loadbalancer" {
-  source         = "./modules/gateway"
+  source         = "./modules/loadbalancer"
   rg             = module.resourcegroup.rg
   location       = module.resourcegroup.loc_id
 
@@ -42,7 +42,24 @@ module "loadbalancer" {
 }
 
 module "vmss" {
-  source         = "./modules/webtier"
+  source         = "./modules/vmss"
+  rg             = module.resourcegroup.rg
+  location       = module.resourcegroup.loc_id
+
+  websubnet_id   = module.networking.websubnet_id
+  lb_pool_id     = module.loadbalancer.lb-pool-id
+}
+
+module "webconfig" {
+  source         = "./modules/webconfig"
+  rg             = module.resourcegroup.rg
+  location       = module.resourcegroup.loc_id
+
+  scaleset_id    = module.vmss.scaleset_id
+}
+
+module "securitygroup" {
+  source         = "./modules/securitygroup"
   rg             = module.resourcegroup.rg
   location       = module.resourcegroup.loc_id
 

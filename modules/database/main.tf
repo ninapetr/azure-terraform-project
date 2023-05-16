@@ -1,5 +1,5 @@
-resource "azurerm_postgresql_server" "postgresql-server" {
-  name                = "postgresql-server"
+resource "azurerm_postgresql_server" "psql_server" {
+  name                = "psql-server46556456"
   resource_group_name = var.rg
   location            = var.location
 
@@ -16,10 +16,10 @@ resource "azurerm_postgresql_server" "postgresql-server" {
   ssl_enforcement_enabled      = true
 }
 
-resource "azurerm_postgresql_database" "db" {
-  name                = "db"
+resource "azurerm_postgresql_database" "example" {
+  name                = "exampledb"
   resource_group_name = var.rg
-  server_name         = azurerm_postgresql_server.postgresql-server.name
+  server_name         = azurerm_postgresql_server.psql_server.name
   charset             = "UTF8"
   collation           = "English_United States.1252"
 }
