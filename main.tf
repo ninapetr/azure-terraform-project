@@ -41,18 +41,16 @@ module "loadbalancer" {
   vnet_name      = var.vnet_name
 }
 
-#module "loadbalancer" {
-#  source         = "./modules/securitygroup"
-#  rg             = module.resourcegroup.rg
-#  location       = module.resourcegroup.loc_id
-
-
-#}
-
 module "vmss" {
   source         = "./modules/webtier"
   rg             = module.resourcegroup.rg
   location       = module.resourcegroup.loc_id
 
   websubnet_id   = module.networking.websubnet_id
+}
+
+module "database" {
+  source         = "./modules/database"
+  rg             = module.resourcegroup.rg
+  location       = module.resourcegroup.loc_id
 }
